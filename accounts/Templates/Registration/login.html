@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load pwa %}
+<head>
+    {% progressive_web_app_meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mis Perris | Login</title>
+   {% load static %}
+    <link rel="stylesheet" href="{% static 'accounts/css/estilo_login.css' %}">
+ 
+</head>
+<body>
+    <header>
+        <img class="Logo" src="{% static 'accounts/img/logo.jpg.png' %}" alt="Logo De La Página">  
+            <ul class="Lista">
+                <li>
+                    <a href="{% url 'home' %}">Inicio</a>
+                </li>
+                <li>
+                    <a href="{% url 'galeria' %}">Galeria</a>
+                </li>
+                <li>
+                    <a href="{% url 'formulario' %}">Contáctanos</a>
+                </li>
+                <li>
+                    <a href="">Agregar Mascota</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </li>
+
+                <li>
+                    <a href="">{{ request.user.first_name }}</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'login'%}">Login</a>
+                </li>
+                <li>
+                    <a href="{% url 'register'%}">Registrar</a>
+                </li>
+                {% endif %}    
+            </ul>
+    </header>
+
+    <div class="Contenido">
+        
+        <form action="" method="post" class="form">
+            <h1 class="form-title"> Iniciar Sesion </h1>
+            {% csrf_token %}
+            
+            {{ form.as_table }}
+            
+            <input type="submit" class="btn-submit" value="Ingresar">
+
+        </form>
+
+        {#<a href="{% url 'register' %}">Registrate</a>#}
+        <a href="{% url 'social:begin' 'facebook' %}" class="link_facebook">Iniciar Sesion Con Facebook</a>
+
+    </div>
+ 
+    <footer>
+        <p class="color_letra_footer ">Desarrollo Web y Mobile</p>
+    </footer>
+    
+</body>
+</html>

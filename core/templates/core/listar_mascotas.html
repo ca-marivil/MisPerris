@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load pwa %}
+<head>
+    {% progressive_web_app_meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MisPerris | Listar Mascota</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/listar.css' %}">
+ 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+        <img class="Logo" src="{% static 'core/img/logo.jpg.png' %}" alt="Logo De La Página">  
+            <ul class="Lista">
+                <li>
+                    <a href="{% url 'home' %}">Inicio</a>
+                </li>
+                <li>
+                    <a href="{% url 'galeria' %}">Galeria</a>
+                </li>
+                <li>
+                    <a href="{% url 'formulario' %}">Contáctanos</a>
+                </li>
+                <li>
+                   {% if request.path == "/listar_mascota/" %}
+                    <a href="/agregar_mascota/">Agregar Mascota</a>
+                   {% endif %}
+                </li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'logout' %}">Cerrar Sesion</a>
+                </li>
+
+                <li>
+                    <a href="">{{ request.user.first_name }}</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'login'%}">Iniciar Sesion</a>
+                </li>
+                <li>
+                    <a href="{% url 'register'%}">Registrar</a>
+                </li>
+                {% endif %}
+                
+            </ul>
+    </header>
+    <div class="Contenido_eliminar">
+    <h1 class="title">Listado De Mascotas</h1>
+    <table class="form">
+        <tr>
+            <th class="form-label">Nombre</th>
+            <th class="form-label">Raza</th>
+            <th class="form-label">Genero</th>
+            <th class="form-label">Fecha De Ingreso</th>
+            <th class="form-label">Fecha De Nacimiento</th>
+            <th class="form-label">Estado</th>
+            <th class="form-label">Imagen</th>
+            <th class="form-label">Opciones</th>
+        </tr>
+        {% for m in mascota %}
+        <tr class = "form-td">
+            <td class = "form-content">{{m.nombre}}</td>
+            <td class = "form-content">{{m.Raza.nomRaza}}</td>
+            <td class = "form-conten">{{m.Genero.nomGenero}}</td>
+            <td class = "form-content">{{m.fechaIngreso}}</td>
+            <td class = "form-content">{{m.fechaNacimiento}}</td>
+            <td class = "form-content">{{m.Estado.nomEstado}}</td>
+            <td class = "form-content">
+            {% if m.imagen %}
+            <img src="{{m.imagen.url}}" width="85" height= "75">
+            {% endif %}
+            </td>
+            <td class="form-content">
+            <a href="{% url 'eliminar_mascota' m.id %}">Eliminar</a>
+            <a href="{% url 'modificar_mascota' m.id %}">Modificar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if messages %}
+
+        {% for s in messages %}
+
+        <div class="modificar">{{s}}</div>
+
+        {% endfor %}
+
+    {% endif %}
+    </div>
+
+    <footer>
+        <p class="color_letra_footer ">Desarrollo Web y Mobile</p>
+    </footer>
+    
+</body>
+</html>
+  

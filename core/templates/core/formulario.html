@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load pwa %}
+<head>
+    {% progressive_web_app_meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MisPerris | Formulario</title>
+    {% load static%}
+    <link rel="stylesheet" href="{% static 'core/css/formulario.css' %}">
+ 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'core/js/validar.js' %}"></script>
+    <script src="{% static 'core/js/jquery.validate.min.js' %}"></script>
+</head>
+<body>
+     
+    <header>
+        <img class="Logo" src="{% static 'core/img/logo.jpg.png' %}" alt="Logo De La Página">  
+            <ul class="Lista">
+                <li>
+                    <a href="{% url 'home' %}">Inicio</a>
+                </li>
+                <li>
+                    <a href="{% url 'galeria' %}">Galeria</a>
+                </li>
+                <li>
+                    <a href="{% url 'formulario' %}">Contáctanos</a>
+                </li>
+                <li>
+                {% if request.path == "/formulario/" %}
+                    <a href="/agregar_mascota/">Agregar Mascota</a>
+                {% endif %}
+                </li>
+                <li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'logout' %}">Cerrar Sesion</a>
+                </li>
+
+                <li>
+                    <a href="">{{ request.user.first_name }}</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'login'%}">Iniciar Sesion</a>
+                </li>
+                <li>
+                   <a href="{% url 'register'%}">Registrar</a>
+                </li>
+                {% endif %}
+            </ul>
+    </header>
+
+    <div class="Contenido">
+        <form action="" method="POST" id="FormularioCliente"  class="form" onsubmit="return validar();">
+            {% csrf_token %}
+            <div class="form-header">
+                <h1 class="form-title">Bienvenidos al sistema de registro</h1>
+            </div>
+
+            <label for="correo" class="form-label">Correo Electronico:</label>
+            <input type="email" name = txtcorreo id="txtcorreo" class="form-input" placeholder="Escriba su correo">
+
+            <label for="run" class="form-label">Run:</label>
+            <input type="text" name = txtrun id="txtrun" class="form-input" placeholder="Ingrese su rut en formato 111111111">
+
+            <label for="nombre" class="form-label">Nombre Completo:</label>
+            <input type="text" name = txtnombre id="txtnombre" class="form-input" placeholder="Escriba su nombre">
+
+            <label for="fecha_Nac" class="form-label">Fecha De Nacimiento:</label>
+            <input type="date" name="dpfecha_nac" id="dpfecha_Nac" class="form-input">
+
+            <label for="numero" class="form-label">Telefono De Contacto:</label>
+            <input type="text" name= txtnumero id="txtnumero" class="form-input" placeholder="Ingrese su numero">
+
+            <label for="region" class="form-label">Región:</label>
+            <select name="cbo_region" id="nomRegion" class="form-input">
+            <option value="" >Seleccionar </option>
+            {% for r in region %}
+            <option value="{{ r.id }}">{{r.nomRegion}}</option>
+            {% endfor %}
+            </select>
+
+            <label for="comuna" class="form-label">Comuna:</label>
+            <select name="cbo_comuna" id="nomComuna" class="form-input">
+            <option value="" >Seleccionar</option>
+            {% for c in comuna %}
+            <option value="{{ c.id }}">{{c.nomComuna}}</option>
+            {% endfor %}
+            </select>
+
+            <label for="tipo_vivienda" class="form-label">Tipo De Vivienda:</label>
+            <select name="cbo_tipo_vivienda" id="cbo_tipo_vivienda" class="form-input">
+            <option value="" >Seleccionar</option> 
+            {% for t in tipovivienda %}
+            <option value="{{ t.id }}">{{t.descripcion}}</option>
+            {% endfor %}
+            </select>
+            
+            <input type="submit" class="btn-submit" value="Registrarse">
+
+        </form>
+       <h3 class="mensaje-guardado">{{mensaje}}</h3>
+
+    </div>
+ 
+    <footer>
+        <p class="color_letra_footer ">Desarrollo Web y Mobile</p>
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load pwa %}
+<head>
+    {% progressive_web_app_meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MisPerris | Inicio</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/Estilos.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="{% static 'core/js/Slider.js' %}"></script>
+</head>
+
+
+<body>
+
+    <header>
+        <img class="Logo" src="{% static 'core/img/logo.jpg.png' %}" alt="Logo De La Página">  
+        <ul class="Lista">
+            <li>
+                <a href="{% url 'home'%}">Inicio</a>
+            </li>
+            <li>
+                <a href="{% url 'galeria'%}">Galeria</a>
+            </li>
+            <li>
+                <a href="{% url 'formulario'%}">Contáctanos</a>
+            </li>
+            <li>
+               {% if request.path == "/" %}
+                <a href="/agregar_mascota/">Agregar Mascota</a>
+               {% endif %}
+            </li>
+            <li>
+               {% if request.path == "/galeria/" %}
+                <a href="/agregar_mascota/">Agregar Mascota</a>
+               {% endif %}
+            </li>
+            {% if request.user.is_authenticated %}
+            <li>
+                <a href="{% url 'logout' %}">Cerrar Sesion</a>
+            </li>
+
+            <li>
+                <a href="">{{ request.user.first_name }}</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'login'%}">Iniciar Sesion</a>
+            </li>
+            <li>
+                <a href="{% url 'register'%}">Registrar</a>
+            </li>
+            {% endif %}
+        </ul>
+    </header>
+
+    <div class="Landing">
+        <div class="slider">
+         
+         <div>
+            <img title="Duque es un aventurero. Sin duda el mejor acompañante siempre" class="Imagen_Slider" src="{% static 'core/img/Duque.jpg' %}" alt="">
+         </div>
+
+         <div>
+            <img title="Apolo es un perro dsitinto de los demas. Se ha gando un lugar en nuestra familia. " class="Imagen_Slider" src="{% static 'core/img/Apolo.jpg' %}" alt="">    
+         </div>
+
+         <div>
+            <img title="Estamos felices de tener a Tom en casa. Es un super fiel compañero" class="Imagen_Slider" src="{% static 'core/img/Tom.jpg' %}" alt="">
+         </div>
+        
+         <div>
+            <img title="Mi hijo el mas feliz con su mascota. Lo mejor que hice fue adoptar a sultan." class="Imagen_Slider" src="{% static 'core/img/kid-dog.jpg' %}" alt="">
+         </div>
+
+        </div>
+        <h3 class="numero_contacto">+ 56 9 98765431</h3>
+        <h4 class="Eslogan">Rescate y adopción de perros callejeros.</h4>
+        <ul class="Redes_sociales">
+            <li><img src="{% static 'core/img/socialfacebook.png' %}" alt="Facebook"></li>
+            <li><img src="{% static 'core/img/socialplus.png' %}" alt="Google Plus"></li>
+            <li><img src="{% static 'core/img/social-inst.png' %}" alt="Instagram"></li>
+            <li><img src="{% static 'core/img/social-twitter.png' %}" alt="Twitter"></li>
+        </ul>
+    </div>
+
+    <div class="Contenido">
+        <div class="Row">
+                    <div class="columna">
+                        <p class="parrafo_contenido_izquierdo">
+                            <h2 class="Titulo_contenido">RESCATE</h2>
+                            <p class="Subtitulo_contenido">ETAPA UNO</p>
+                            <h1 class="subrayado_contenido_izquierdo">____</h1>
+                            <p class="color_letra_contenido margen_contenido">Rescatamos perros en situación de peligro y/o abandono. Los rehabilitamos y los</p>
+                            <p class="color_letra_contenido margen_contenido_2">preparamos para buscarles un hogar.</p>
+                            <img class="imagen_perro_contenido" src="{% static 'core/img/rescate.jpg' %}" alt="imagen perrito del contenido">
+                        </p>
+                    </div>
+                    <div class="columna">
+                        <p class="parrafo_contenido_derecho">
+                            <img class="imagen_comida_perro" src="{% static 'core/img/crowfunding.jpg' %}" alt="imagen comida perro">
+                            <h2 class="Titulo_contenido_derecho">CROWDFUNDING</h2>
+                            <p class="Subtitulo_contenido_derecho">FINANCIAMIENTO</p>
+                            <h1 class="subrayado_contenido_derecho">____</h1>
+                            <p class="color_letra_contenido margen_contenido_derecho ">Sigue nuestras redes sociales para informarte acerca de las diversas campañas y</p>
+                            <p class="color_letra_contenido margen_contenido_derecho_2">actividades que realizamos para obtener financiamiento para seguir ayudando.</p>
+                            <a class="Boton" href="{% url 'agregar'%}">Registrar</a>
+                        </p>  
+                    </div>
+            
+        </div>    
+    </div>
+    <div style="clear: both;"></div>
+
+    {% block contenido %}
+
+    {% endblock contenido %}
+
+
+    </div>
+
+    <footer>
+        <p class="color_letra_footer ">Desarrollo Web y Mobile</p>
+    </footer>
+
+</body>
+</html>

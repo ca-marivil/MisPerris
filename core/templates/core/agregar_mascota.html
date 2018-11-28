@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load pwa %}
+<head>
+    {% progressive_web_app_meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MisPerris | Agregar Mascota</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/agregar.css' %}">
+ 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'core/js/agregar_validate.js' %}"></script>
+</head>
+<body>
+    <header>
+        <img class="Logo" src="{% static 'core/img/logo.jpg.png' %}" alt="Logo De La Página">  
+            <ul class="Lista">
+                <li>
+                    <a href="{% url 'home' %}">Inicio</a>
+                </li>
+                <li>
+                    <a href="{% url 'galeria' %}">Galeria</a>
+                </li>
+                <li>
+                    <a href="{% url 'formulario' %}">Contáctanos</a>
+                </li>
+                <li>
+                    {% if request.path == "/agregar_mascota/" %}
+                    <a href="/listar_mascota/">Listar Mascota</a>
+                    {% endif %}
+                </li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+
+                <li>
+                <a href="">{{ request.user.first_name }}</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'login'%}">Iniciar Sesion</a>
+                </li>
+                <li>
+                    <a href="{% url 'register'%}">Registrar</a>
+                </li>
+                {% endif %}
+              
+            </ul>
+    </header>
+    
+    <div class="Contenido">
+        <form action="" method="POST" id="FormularioMascota"  class="form" onsubmit="return validar();" enctype="multipart/form-data" >
+            {% csrf_token %} 
+            <div class="form-header">
+                <h1 class="form-title">Bienvenidos Al Registro De Mascotas</h1>
+            </div>
+
+            <label for="nombre" class="form-label">Nombre de la mascota:</label>
+            <input type="text" name = txtnombre id="txtnombre" class="form-input" placeholder="Escriba El Nombre de la mascota">
+
+            <label for="raza" class="form-label">Raza:</label>
+            <select name="cbo_raza" id="cbo_raza" class="form-input"><option value="">Seleccionar</option>
+                {% for a in raza %}
+                <option value="{{ a.id }}">{{a.nomRaza}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="Genero" class="form-label">Género:</label>
+            <select name="cbo_genero" id="cbo_genero" class="form-input"><option value="">Seleccionar</option>
+                {% for g in genero %}
+                <option value="{{ g.id }}">{{g.nomGenero}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="fecha_in" class="form-label">Fecha De Ingreso:</label>
+            <input type="date" name="dpfecha_in" id="dpfecha_in" class="form-input" required>
+
+            <label for="fecha_nac" class="form-label">Fecha De Nacimiento:</label>
+            <input type="date" name= "dpfecha_nac" id="dpfecha_nac" class="form-input" required>
+
+            <label for="estado" class="form-label">Estado:</label>
+            <select name="cbo_estado" id="cbo_estado" class="form-input"><option value="">Seleccionar</option>
+                {% for e in estado %}
+                {if}
+                <option value="{{ e.id }}">{{e.nomEstado}}</option>
+                {% endfor %}
+            </select>
+
+            <label class="form-label">Imagen:</label>
+            <input type="file" name= "txtImagen" id="txtImagen" class="form-input-imagen" >
+
+            <input type="submit" class="btn-submit" value="Ingresar Mascota">
+
+        </form>
+        <h3 class="guardar">
+           {{mensaje}}
+        </h3>
+    </div>
+
+
+ 
+    <footer>
+        <p class="color_letra_footer ">Desarrollo Web y Mobile</p>
+    </footer>
+    
+</body>
+</html>
